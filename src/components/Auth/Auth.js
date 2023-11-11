@@ -14,6 +14,7 @@ import { signup, signin } from '../../actions/auth';
 const initialState = { firstName: '', lastName: '', email: '', password:'', confirmPassword: ''};
 
 const Auth = () => {
+    console.log(process.env.REACT_APP_CLIENT_ID)
     const classes = useStyles();
     const [showPassword, setShowPassword] = useState(false);
     const [isSignUp, setIsSignUp] = useState(false);
@@ -22,9 +23,10 @@ const Auth = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 
+
     useEffect(() => {
         gapi.load("client:auth2", () => {
-            gapi.auth2.init({clientId:clientId})
+            gapi.auth2.init({clientId: process.env.REACT_APP_CLIENT_ID})
         })
     }, [])
 
@@ -90,7 +92,7 @@ const Auth = () => {
                     {isSignUp ? 'Sign Up' : 'Sign In'}
                 </Button>
                 <GoogleLogin 
-                    clientId={clientId}
+                    clientId={process.env.REACT_APP_CLIENT_ID}
                     render={(renderProps) => (
                         <Button className={classes.googleButton} color='primary' fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon />} variant='contained'>
                             Google Sign In
